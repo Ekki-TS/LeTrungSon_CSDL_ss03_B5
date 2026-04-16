@@ -3,14 +3,30 @@ DROP TABLE IF EXISTS CART_ITEMS;
 CREATE TABLE CART_ITEMS (
     CartItemID INT PRIMARY KEY AUTO_INCREMENT,
     UserID INT NOT NULL,
-    ProductID INT NOT NULL, 
-    Quantity INT NOT NULL CHECK (Quantity > 0), 
+    ProductID INT NOT NULL,
+    Quantity INT NOT NULL CHECK (Quantity > 0),
     AddedDate DATETIME DEFAULT CURRENT_TIMESTAMP,
     UNIQUE KEY unique_user_product (UserID, ProductID)
 );
 
-INSERT INTO CART_ITEMS (UserID, ProductID , Quantity) VALUES
-('1', '5' , '5'),
-('2' , '10' , '8'); 
+INSERT INTO CART_ITEMS (UserID, ProductID, Quantity)
+SELECT 1, 5, 3
+WHERE 3 > 0
+AND NOT EXISTS (
+    SELECT 1 FROM CART_ITEMS 
+    WHERE UserID = 1 AND ProductID = 5
+);
 
-SELECT * FROM CART_ITEMS; 
+UPDATE CART_ITEMS
+SET Quantity = Quantity + 3
+WHERE UserID = 1 AND ProductID = 5 AND 3 > 0;
+
+SELECT * FROM CART_ITEMS
+WHERE UserID = 1;
+
+UPDATE CART_ITEMS
+SET Quantity = 5
+WHERE UserID = 1 AND ProductID = 5 AND 5 > 0;
+
+DELETE FROM CART_ITEMS
+WHERE UserID = 1 AND ProductID = 5;
