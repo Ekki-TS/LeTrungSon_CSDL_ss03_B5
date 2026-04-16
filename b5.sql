@@ -1,0 +1,16 @@
+DROP TABLE IF EXISTS CART_ITEMS;
+
+CREATE TABLE CART_ITEMS (
+    CartItemID INT PRIMARY KEY AUTO_INCREMENT,
+    UserID INT NOT NULL,
+    ProductID INT NOT NULL, 
+    Quantity INT NOT NULL CHECK (Quantity > 0), 
+    AddedDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_user_product (UserID, ProductID)
+);
+
+INSERT INTO CART_ITEMS (UserID, ProductID , Quantity) VALUES
+('1', '5' , '5'),
+('2' , '10' , '8'); 
+
+SELECT * FROM CART_ITEMS; 
